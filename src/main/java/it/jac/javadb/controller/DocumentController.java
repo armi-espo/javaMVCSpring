@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +27,7 @@ import it.jac.javadb.service.DocumentoService;
 
 @Controller
 @RequestMapping("/jac")
+@Secured("ROLE_USER")
 public class DocumentController {
 
 	private Logger log = LoggerFactory.getLogger(DocumentController.class);
@@ -48,6 +50,7 @@ public class DocumentController {
 		return mav;
 	}	
 	
+	@Secured("ROLE_EDIT")
 	@RequestMapping(path = "/insert", method = RequestMethod.GET)
 	public ModelAndView pageInsert() {
 		
