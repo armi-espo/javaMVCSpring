@@ -51,7 +51,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter implements We
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/resources/**", "/encodePassword").permitAll()
+                .antMatchers("/vendor/**", "/css/**", "/encodePassword").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -59,6 +59,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter implements We
                 .permitAll()
                 .and()
             .logout()
+            	.logoutUrl("/logout")
                 .permitAll();
     }
 

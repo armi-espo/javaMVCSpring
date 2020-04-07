@@ -3,8 +3,7 @@ package it.jac.javadb.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,7 +13,7 @@ public class RootController {
 	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@RequestMapping(path = "/", method = RequestMethod.GET)
+	@GetMapping(path = "/")
 	public ModelAndView root() {
 		
 		ModelAndView mav = new ModelAndView();
@@ -23,7 +22,7 @@ public class RootController {
 		return mav;
 	}
 	
-	@RequestMapping(path = "/login", method = RequestMethod.GET)
+	@GetMapping(path = "/login")
 	public ModelAndView login() {
 		
 		ModelAndView mav = new ModelAndView();
@@ -32,7 +31,7 @@ public class RootController {
 		return mav;
 	}
 	
-	@RequestMapping(path = "/encodePassword", method = RequestMethod.GET)
+	@GetMapping(path = "/encodePassword")
 	public ModelAndView encodePassword(@RequestParam String pwd) {
 
 		ModelAndView mav = new ModelAndView();

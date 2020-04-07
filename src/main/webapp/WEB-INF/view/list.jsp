@@ -4,34 +4,27 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="pt" uri="/WEB-INF/tlds/pagetemplate.tld"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Elenco Documenti</title>
-<style type="text/css">
-table {
-	border: 1px solid gray;
-	border-collapse: collapse;
-}
-th, td {
-	border: 1px solid gray;
-	border-collapse: collapse;
-	padding: 3px;
-}
-</style>
-</head>
-
-<body>
+<pt:page>
 	<table>
 		<thead>
 			<tr>
-				<th>Codice</th>
-				<th>Descrizione</th>
-				<th>Data</th>
-				<th>Tipo</th>
-				<th>Numero pagine</th>
+				<th>
+					<spring:message code="table.th.cod"/>
+				</th>
+				<th>
+					<spring:message code="table.th.desc"/>
+				</th>
+				<th>
+					<spring:message code="table.th.date"/>
+				</th>
+				<th>
+					<spring:message code="table.th.type"/>
+				</th>
+				<th>
+					<spring:message code="table.th.numPage"/>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,5 +46,16 @@ th, td {
 			</c:forEach>
 		</tbody>
 	</table>
-</body>
-</html>
+	
+	<style type="text/css">
+	table {
+		border: 1px solid gray;
+		border-collapse: collapse;
+	}
+	th, td {
+		border: 1px solid gray;
+		border-collapse: collapse;
+		padding: 3px;
+	}
+	</style>
+</pt:page>

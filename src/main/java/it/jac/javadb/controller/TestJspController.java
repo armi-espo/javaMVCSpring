@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.jac.javadb.entity.Documento;
@@ -14,7 +13,7 @@ import it.jac.javadb.entity.Documento;
 @Controller
 public class TestJspController {
 
-	@RequestMapping(path = "/testjsp", method = RequestMethod.GET)
+	@GetMapping(path = "/testjsp")
 	public ModelAndView testjsp() {
 		
 		ModelAndView mav = new ModelAndView();

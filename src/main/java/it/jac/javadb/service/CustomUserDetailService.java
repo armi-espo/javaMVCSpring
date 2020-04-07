@@ -34,7 +34,8 @@ public class CustomUserDetailService implements UserDetailsService {
         for(String role : tokens) {
         	grantedAuthorities.add(new SimpleGrantedAuthority(role));
         }
-
+        // ROLE_USER
+        // ROLE_READONLY
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);    
 	}
 }

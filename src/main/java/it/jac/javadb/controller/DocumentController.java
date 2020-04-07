@@ -12,10 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,7 +42,7 @@ public class DocumentController {
 	@Autowired
 	private DocumentoService service;
 	
-	@RequestMapping(path = "/home", method = RequestMethod.GET)
+	@GetMapping(path = "/home")
 	public ModelAndView home() {
 		
 		ModelAndView mav = new ModelAndView();
@@ -50,8 +51,8 @@ public class DocumentController {
 		return mav;
 	}	
 	
-	@Secured("ROLE_EDIT")
-	@RequestMapping(path = "/insert", method = RequestMethod.GET)
+	@Secured("EDIT")
+	@GetMapping(path = "/insert")
 	public ModelAndView pageInsert() {
 		
 		ModelAndView mav = new ModelAndView();
@@ -63,7 +64,8 @@ public class DocumentController {
 		return mav;
 	}
 
-	@RequestMapping(path = "/insert", method = RequestMethod.POST)
+	@Secured("EDIT")
+	@PostMapping(path = "/insert")
 	public ModelAndView sendDocumentInfo(
 			@ModelAttribute("dto") @Validated DocumentoDTO dto, 
 			BindingResult bindingResult) {
@@ -93,7 +95,7 @@ public class DocumentController {
 		return mav;
 	}
 	
-	@RequestMapping(path = "/update", method = RequestMethod.GET)
+	@GetMapping(path = "/update")
 	public ModelAndView pageUpdate(@RequestParam(name = "docId") String parId) {
 		
 		ModelAndView mav = new ModelAndView();
@@ -115,7 +117,7 @@ public class DocumentController {
 		return mav;
 	}
 	
-	@RequestMapping(path = "/list", method = RequestMethod.GET)
+	@GetMapping(path = "/list")
 	public ModelAndView pageList() {
 		
 		ModelAndView mav = new ModelAndView();
@@ -127,7 +129,7 @@ public class DocumentController {
 		return mav;
 	}	
 
-	@RequestMapping(path = "/detail", method = RequestMethod.GET)
+	@GetMapping(path = "/detail")
 	public ModelAndView pageDetail(@RequestParam(name = "docId") String parId) {
 		
 		ModelAndView mav = new ModelAndView();
