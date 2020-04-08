@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import it.jac.javadb.controller.validation.DateEditor;
 import it.jac.javadb.controller.validation.DocumentoValidator;
 import it.jac.javadb.controller.validation.TimestampEditor;
 import it.jac.javadb.dto.DocumentoDTO;
@@ -37,6 +38,7 @@ public class DocumentController {
 	private void initBinder(WebDataBinder binder) {
 		binder.setValidator(new DocumentoValidator());
 		binder.registerCustomEditor(Timestamp.class, new TimestampEditor());
+		binder.registerCustomEditor(java.util.Date.class, new DateEditor());
 	}
 	
 	@Autowired
@@ -51,7 +53,7 @@ public class DocumentController {
 		return mav;
 	}	
 	
-	@Secured("EDIT")
+	@Secured("ROLE_EDIT")
 	@GetMapping(path = "/insert")
 	public ModelAndView pageInsert() {
 		
@@ -64,7 +66,7 @@ public class DocumentController {
 		return mav;
 	}
 
-	@Secured("EDIT")
+	@Secured("ROLE_EDIT")
 	@PostMapping(path = "/insert")
 	public ModelAndView sendDocumentInfo(
 			@ModelAttribute("dto") @Validated DocumentoDTO dto, 
@@ -94,7 +96,39 @@ public class DocumentController {
 		
 		return mav;
 	}
-	
+
+	@Secured("ROLE_EDIT")
+	@PostMapping(path = "/update")
+	public ModelAndView updateDocumentInfo(
+			@ModelAttribute("dto") @Validated DocumentoDTO dto, 
+			BindingResult bindingResult) {
+		
+		log.debug("coddoc {}", dto.getCodDoc());
+		log.debug("datadoc {}", dto.getDataDoc());
+
+		ModelAndView mav = new ModelAndView();
+
+		if (bindingResult.hasErrors()) {
+			
+			log.warn("Errore nel binding dei parametri");
+			mav.setViewName("update");
+			
+		} else {
+			
+			// bind parametri corretto
+			// posso procedere con il salvataggio dei dati su DB
+			mav.setViewName("redirect:/jac/list");
+			
+			Documento doc = new Documento();
+			BeanUtils.copyProperties(dto, doc);
+			
+			service.creaDocumento(doc);
+		}
+		
+		return mav;
+	}
+
+	@Secured("ROLE_EDIT")
 	@GetMapping(path = "/update")
 	public ModelAndView pageUpdate(@RequestParam(name = "docId") String parId) {
 		

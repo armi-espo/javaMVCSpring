@@ -37,11 +37,10 @@
 					</td>
 					<td>${item.descDoc}</td>
 					<td>
-						<fmt:formatDate value="${item.dataDoc}" pattern="dd/MM/yyyy HH:mm:ss"/>
+						<fmt:formatDate value="${item.dataDoc}" pattern="dd/MM/yyyy"/>
 					</td>
 					<td>${item.tipoDoc}</td>
 					<td>${item.numPagine}</td>
-					
 				</tr>
 			</c:forEach>
 		</tbody>

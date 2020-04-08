@@ -2,24 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="pt" uri="/WEB-INF/tlds/pagetemplate.tld"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Creazione nuovo documento</title>
-	
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
-	<style type="text/css">
-	.error {
-		border: 1px solid red;
-	}
-	</style>
-</head>
-<body>
+<pt:page>
 
 	<h4><spring:message code="page.title.insert" ></spring:message> </h4>
 	
@@ -53,15 +38,7 @@
 					<form:input type="text" path="numPagine" cssClass="form-control"></form:input>
 				</spring:bind>
 			</div>
-			<div class="form-group">		
-				<label for="creationTime">Creation Time</label>
-				<spring:bind path="creationTime">
-					<form:errors path="creationTime" cssStyle="font-weight:bolder;color:red"/>
-					<form:input type="text" path="creationTime" cssClass="form-control"></form:input>
-				</spring:bind>
-			</div>
 			<button class="btn btn-success">Conferma dati</button>
 		</form:form>
 	</div>
-</body>
-</html>
+</pt:page>

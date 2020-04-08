@@ -4,21 +4,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="pt" uri="/WEB-INF/tlds/pagetemplate.tld"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Dettaglio del documento</title>
-	
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
-</head>
-<body>
+<pt:page>
+
 	<h4>Pagina di dettaglio del documento</h4>
 
+	<sec:authorize access="hasRole('EDIT')" var="editEnabled"></sec:authorize>
+	<c:if test="${editEnabled}">   	
+		<div class="col-2">
+			<button class="btn btn-primary" id="btnEdit">Modifica</button>
+		</div>
+	</c:if>
 	<div class="col-8">
 		<div class="form-group">
 			<label for="codDoc">Codice</label>
@@ -45,5 +43,14 @@
 			<c:out value="${dto.creationTime}"></c:out>
 		</div>
 	</div>
-</body>
-</html>
+	
+	<script>
+	$( document ).ready(function() {
+		
+		$("#btnEdit").click(function() {
+			window.location.href='<spring:url value="update?docId=${dto.id}"/>';
+		});
+	});
+	
+	</script>
+</pt:page>

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class DocumentoDTO {
 
-	private String idDoc;
+	private int id;
 	
 	private String codDoc;
 
@@ -19,12 +19,12 @@ public class DocumentoDTO {
 	
 	private Timestamp creationTime;
 
-	public String getIdDoc() {
-		return idDoc;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdDoc(String idDoc) {
-		this.idDoc = idDoc;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getCodDoc() {
