@@ -13,8 +13,11 @@
 			<form:hidden path="id"/>
 			
 			<div class="form-group">
-				<label for="codDoc">Codice</label>
-				<form:input type="text" path="codDoc" cssClass="form-control"></form:input>
+				<spring:bind path="codDoc">
+					<form:errors path="codDoc" cssStyle="font-weight:bolder;color:red"/>			
+					<label for="codDoc">Codice</label>
+					<form:input type="text" path="codDoc" cssClass="form-control"></form:input>
+				</spring:bind>
 			</div>
 			<div class="form-group">
 				<label for="descDoc">Descrizione</label>
@@ -41,5 +44,13 @@
 			</div>
 			<button class="btn btn-success">Conferma dati</button>
 		</form:form>
+		<button class="btn btn-info" onclick="backDetail()">Annulla</button>
 	</div>
+	<script>
+	
+	function backDetail() {
+		window.location.href="<spring:url value='/jac/detail?docId=${dto.id}'/>";
+	}
+
+	</script>
 </pt:page>

@@ -68,8 +68,8 @@
                 Lingua
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="?lingua=IT">IT</a>
-                <a class="dropdown-item" href="?lingua=EN">EN</a>
+                <a class="dropdown-item" href="javascript:changeLanguage('IT')">IT</a>
+                <a class="dropdown-item" href="javascript:changeLanguage('EN')">EN</a>
               </div>
             </li>
             <li class="nav-item active">
@@ -83,9 +83,9 @@
       </nav>
 
       <div class="container-fluid">
-
+      
 		<jsp:doBody/>
-
+      
       </div>
     </div>
     <!-- /#page-content-wrapper -->
@@ -95,6 +95,15 @@
 	<script>
 		function logout() {
 			$("#form1").submit();
+		}
+		
+		function changeLanguage(lingua) {
+			
+			var separator = "?";
+			if (window.location.href.indexOf('?') > 1) {
+				separator = "&";
+			}
+			window.location.href=window.location.href + separator + 'lingua=' + lingua;
 		}
 	</script>
 </body>

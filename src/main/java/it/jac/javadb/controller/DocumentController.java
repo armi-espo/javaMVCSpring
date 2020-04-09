@@ -3,11 +3,15 @@ package it.jac.javadb.controller;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,8 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 import it.jac.javadb.controller.validation.DateEditor;
 import it.jac.javadb.controller.validation.DocumentoValidator;
 import it.jac.javadb.controller.validation.TimestampEditor;
+import it.jac.javadb.dao.UserRepository;
 import it.jac.javadb.dto.DocumentoDTO;
 import it.jac.javadb.entity.Documento;
+import it.jac.javadb.entity.User;
 import it.jac.javadb.service.DocumentoService;
 
 @Controller
@@ -33,6 +39,9 @@ import it.jac.javadb.service.DocumentoService;
 public class DocumentController {
 
 	private Logger log = LoggerFactory.getLogger(DocumentController.class);
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
@@ -49,6 +58,13 @@ public class DocumentController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("home");
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		log.info("utente loggato " + username);
+		
+		User user = userRepository.findByUsername(username);
+		log.info("user " + user);
+		
 		
 		return mav;
 	}	
@@ -152,13 +168,15 @@ public class DocumentController {
 	}
 	
 	@GetMapping(path = "/list")
-	public ModelAndView pageList() {
+	public ModelAndView pageList(HttpServletRequest request) {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("list");
 		
 		List<Documento> list = service.findAll();
 		mav.addObject("list", list);
+		
+		request.getSession().setAttribute("lastList", list);
 		
 		return mav;
 	}	
@@ -185,4 +203,35 @@ public class DocumentController {
 		}
 		return mav;
 	}
+	
+	@Secured("ROLE_DELETE")
+	@PostMapping(path = "/delete")
+	public ModelAndView deleteDocument(@RequestParam int id) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/jac/list");
+		
+		service.deleteDocumento(id);
+		
+		return mav;
+	}
+	
+	@Secured("ROLE_DELETE")
+	@GetMapping(path = "/posInList")
+	public ResponseEntity<String> findPosInList(@RequestParam(name = "id") int id, HttpServletRequest request) {
+		
+		List<Documento> list = (List<Documento>)request.getSession().getAttribute("lastList");
+		
+		int result = 1;
+		for (Documento documento : list) {
+			
+			if (documento.getId() == id) {
+				break;
+			}
+			result++;
+		}
+		
+		return ResponseEntity.ok(String.valueOf(result));
+	}
+	
 }

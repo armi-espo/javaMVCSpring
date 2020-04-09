@@ -11,12 +11,24 @@
 
 	<h4>Pagina di dettaglio del documento</h4>
 
+	<form:form id="form2" action="delete" method="POST" modelAttribute="dto">
+		<form:hidden path="id"/>
+	</form:form>
+	
 	<sec:authorize access="hasRole('EDIT')" var="editEnabled"></sec:authorize>
 	<c:if test="${editEnabled}">   	
 		<div class="col-2">
 			<button class="btn btn-primary" id="btnEdit">Modifica</button>
 		</div>
 	</c:if>
+	
+	<sec:authorize access="hasRole('DELETE')" var="deleteEnabled"></sec:authorize>
+	<c:if test="${deleteEnabled}">   	
+		<div class="col-2">
+			<button class="btn btn-primary" id="btnDelete">Delete</button>
+		</div>
+	</c:if>
+	
 	<div class="col-8">
 		<div class="form-group">
 			<label for="codDoc">Codice</label>
@@ -44,11 +56,24 @@
 		</div>
 	</div>
 	
+	<div id="posInListResult">
+	
+	</div>
+	
 	<script>
 	$( document ).ready(function() {
 		
 		$("#btnEdit").click(function() {
 			window.location.href='<spring:url value="update?docId=${dto.id}"/>';
+		});
+		
+		$("#btnDelete").click(function() {
+			$('#form2').submit();
+		});
+		
+		$.get("posInList?id=${dto.id}", function( data ) {
+			console.log(data);
+			$('#posInListResult').html(data);
 		});
 	});
 	

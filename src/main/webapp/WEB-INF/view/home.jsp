@@ -3,5 +3,7 @@
 <%@ taglib prefix="pt" uri="/WEB-INF/tlds/pagetemplate.tld"%>
 
 <pt:page>
+
 	Pagina principale
+
 </pt:page>

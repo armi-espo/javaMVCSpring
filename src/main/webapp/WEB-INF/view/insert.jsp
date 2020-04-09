@@ -12,8 +12,11 @@
 		<form:form method="POST" modelAttribute="dto">
 	
 			<div class="form-group">
-				<label for="codDoc">Codice</label>
-				<form:input type="text" path="codDoc" cssClass="form-control"></form:input>
+				<spring:bind path="codDoc">
+					<form:errors path="codDoc" cssStyle="font-weight:bolder;color:red"/>
+					<label for="codDoc">Codice</label>
+					<form:input type="text" path="codDoc" cssClass="form-control"></form:input>
+				</spring:bind>
 			</div>
 			<div class="form-group">
 				<label for="descDoc">Descrizione</label>

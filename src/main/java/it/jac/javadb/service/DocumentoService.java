@@ -63,4 +63,9 @@ public class DocumentoService {
 		
 		this.repository.save(doc);
 	}
+
+	public void deleteDocumento(int id) {
+
+		this.repository.delete(findDocumentoById(id));
+	}
 }

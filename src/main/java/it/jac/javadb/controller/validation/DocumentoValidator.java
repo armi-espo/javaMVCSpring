@@ -1,5 +1,6 @@
 package it.jac.javadb.controller.validation;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
@@ -20,6 +21,12 @@ public class DocumentoValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		
 		log.debug("Validate object Documento");
+		
+		DocumentoDTO dto = (DocumentoDTO) target;
+		
+		if (StringUtils.isEmpty(dto.getCodDoc()) || dto.getCodDoc().length() < 3) {
+			errors.rejectValue("codDoc", "codDoc.notValid");
+		}
 	}
 
 }
